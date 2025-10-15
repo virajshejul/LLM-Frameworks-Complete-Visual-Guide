@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LLM Frameworks — Complete Visual Guide</title>
+  <style>
+    :root{
+      --bg: #f7f7f8;
+      --card: #fff;
+      --text: #111;
+      --muted: #555;
+      --accent: #0b3d91;
+      --glass: rgba(11,61,145,0.06);
+    }
+    [data-theme="dark"]{
+      --bg: #0b0b0c;
+      --card: #0f1113;
+      --text: #e6eef8;
+      --muted: #9aa5b1;
+      --accent: #58a6ff;
+      --glass: rgba(88,166,255,0.06);
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      padding:28px;
+      display:flex;
+      justify-content:center;
+    }
+    .wrap{
+      width:100%;
+      max-width:1100px;
+    }
+    header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+    .brand{display:flex; gap:12px; align-items:center;}
+    .logo{
+      width:56px; height:56px; border-radius:10px; background:var(--accent); display:grid; place-items:center; color:white; font-weight:700; font-size:20px; box-shadow:0 6px 18px var(--glass);
+    }
+    h1.title{font-size:1.35rem; margin:0;}
+    .controls{display:flex; gap:10px; align-items:center;}
+    .toggle{
+      background:var(--card); padding:6px 10px; border-radius:8px; box-shadow:0 6px 18px var(--glass); cursor:pointer; border:1px solid rgba(0,0,0,0.04);
+    }
+    main{display:grid; grid-template-columns: 1fr 320px; gap:20px;}
+    article{background:var(--card); padding:20px; border-radius:12px; box-shadow:0 10px 30px rgba(2,6,23,0.06); overflow:auto;}
+    aside{background:var(--card); padding:18px; border-radius:12px; height:max-content; position:sticky; top:28px; box-shadow:0 10px 30px rgba(2,6,23,0.04);}
+    h1.section{font-size:1.05rem; color:var(--accent); margin-top:18px;}
+    p{margin:8px 0;}
+    pre{background:rgba(0,0,0,0.06); padding:12px; border-radius:8px; overflow:auto;}
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:0.95rem;}
+    .diagram{margin:14px 0; border-radius:8px; padding:12px; background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);}
+    .flow-row{display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
+    .box{background:var(--card); border:1px solid rgba(0,0,0,0.06); padding:12px 14px; border-radius:8px; min-width:120px; text-align:center;}
+    .small{font-size:0.9rem; color:var(--muted);}
+    .note{font-size:0.9rem; color:var(--muted); margin-top:8px;}
+    .center{display:flex; justify-content:center;}
+    .svg-diagram{width:100%; height:320px; background:transparent; border-radius:8px;}
+    .big-hr{height:1px; background:linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent); margin:18px 0; border-radius:2px;}
+    footer{margin-top:14px; font-size:0.9rem; color:var(--muted);}
+    ul{margin:8px 0 8px 18px;}
+    /* CSS-based flowchart */
+    .flowchart{display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap;}
+    .arrow{width:60px; height:24px; display:inline-flex; align-items:center; justify-content:center;}
+    /* small responsive */
+    @media(max-width:980px){
+      main{grid-template-columns:1fr; }
+      aside{position:relative; top:0;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="page">
+    <header>
+      <div class="brand">
+        <div class="logo">LLM</div>
+        <div>
+          <h1 class="title">LLM Frameworks — Complete Visual Guide</h1>
+          <div class="small">Deep explanations, diagrams (SVG + CSS), and examples — ready for GitHub Pages</div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="toggle" id="themeBtn">Toggle Dark / Light</div>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <h1 class="section">Introduction — What is an LLM?</h1>
+        <p>Large Language Models (LLMs) are neural networks trained to model human language. They predict text, answer questions, summarise content, translate between languages, and even generate code or images when combined with multi-modal training.</p>
+        <p>LLMs are built primarily with the Transformer architecture and are typically pre-trained on massive corpora and then fine-tuned for specific tasks or instruction-following.</p>
+
+        <h1 class="section">Transformer Architecture (SVG diagram)</h1>
+        <p>At the core of modern LLMs is the Transformer. Below is a simplified SVG diagram showing the encoder-decoder idea (many LLMs are decoder-only, but the attention mechanisms are shared conceptually).</p>
+
+        <div class="diagram">
+          <!-- SVG: simplified transformer block -->
+          <svg class="svg-diagram" viewBox="0 0 1000 360" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <!-- Input tokens -->
+            <g font-family="sans-serif" fill="none" stroke="#cbd5e1">
+              <rect x="20" y="20" width="140" height="40" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+              <text x="90" y="45" text-anchor="middle" fill="#0b3d91" font-weight="600">Input Tokens</text>
+              <line x1="160" y1="40" x2="220" y2="40" stroke="#94a3b8" stroke-dasharray="4"/>
+            </g>
+
+            <!-- Token embeddings -->
+            <g>
+              <rect x="220" y="8" width="160" height="64" rx="8" fill="#fff" stroke="#cbd5e1"/>
+              <text x="300" y="38" text-anchor="middle" fill="#0b3d91" font-weight="700">Token Embeddings</text>
+              <line x1="380" y1="40" x2="440" y2="40" stroke="#94a3b8"/>
+            </g>
+
+            <!-- Positional enc -->
+            <g>
+              <rect x="440" y="8" width="160" height="64" rx="8" fill="#fff" stroke="#cbd5e1"/>
+              <text x="520" y="38" text-anchor="middle" fill="#0b3d91" font-weight="700">+ Positional Encodings</text>
+              <line x1="600" y1="40" x2="660" y2="40" stroke="#94a3b8"/>
+            </g>
+
+            <!-- Transformer Blocks -->
+            <g>
+              <rect x="660" y="8" width="320" height="64" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+              <text x="820" y="30" text-anchor="middle" fill="#12377a" font-weight="700">Transformer Blocks (Self-Attention + MLP)</text>
+            </g>
+
+            <!-- Detailed multi-head attention -->
+            <g transform="translate(240,110)">
+              <rect x="0" y="0" width="720" height="200" rx="12" fill="#fff" stroke="#e6eef8"/>
+              <text x="360" y="24" text-anchor="middle" fill="#0b3d91" font-weight="700">Inside a Transformer Block</text>
+
+              <!-- Multi-head attention -->
+              <g>
+                <rect x="60" y="44" width="220" height="56" rx="8" fill="#f8fafc" stroke="#dbeafe"/>
+                <text x="170" y="78" text-anchor="middle" fill="#0b3d91" font-weight="600">Multi-Head Self-Attention</text>
+                <text x="170" y="98" text-anchor="middle" class="small" fill="#6b7280">Query / Key / Value matrices → Attention scores</text>
+              </g>
+
+              <!-- Add & Norm -->
+              <g>
+                <rect x="320" y="44" width="160" height="56" rx="8" fill="#fff7ed" stroke="#ffedd5"/>
+                <text x="400" y="78" text-anchor="middle" fill="#92400e" font-weight="600">Add & Norm</text>
+              </g>
+
+              <!-- Feed-forward -->
+              <g>
+                <rect x="500" y="44" width="220" height="56" rx="8" fill="#ecfccb" stroke="#bbf7d0"/>
+                <text x="610" y="78" text-anchor="middle" fill="#14532d" font-weight="600">Feed-forward (MLP)</text>
+                <text x="610" y="98" text-anchor="middle" class="small" fill="#6b7280">Dense → Activation → Dense</text>
+              </g>
+              <!-- arrows -->
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 z" fill="#94a3b8"/>
+                </marker>
+              </defs>
+              <line x1="150" y1="130" x2="320" y2="130" stroke="#94a3b8" marker-end="url(#arrow)"/>
+              <line x1="480" y1="130" x2="500" y2="130" stroke="#94a3b8" marker-end="url(#arrow)"/>
+              <line x1="680" y1="130" x2="840" y2="130" stroke="#94a3b8" marker-end="url(#arrow)"/>
+            </g>
+
+            <!-- Output -->
+            <g>
+              <line x1="980" y1="40" x2="1020" y2="40" stroke="#94a3b8"/>
+              <rect x="1020" y="20" width="140" height="40" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+              <text x="1090" y="45" text-anchor="middle" fill="#0b3d91" font-weight="600">Output Tokens</text>
+            </g>
+
+          </svg>
+        </div>
+
+        <p class="note">Explanation: The input tokens are converted to embeddings, combined with positional encodings, and fed into multiple transformer blocks. Each block has multi-head attention (allowing the model to attend to different parts of the sequence) and an MLP feed-forward network. Residual connections + layer normalization stabilize training.</p>
+
+        <h1 class="section">Tokenization</h1>
+        <p>Tokenizers split raw text into subword units. Common techniques:</p>
+        <ul>
+          <li><strong>BPE (Byte Pair Encoding)</strong> — merges common pairs of characters/subwords to build a vocabulary.</li>
+          <li><strong>SentencePiece</strong> — treats input as a raw byte sequence, useful for multilingual models.</li>
+          <li><strong>Unigram</strong> — probabilistic selection of subword pieces.</li>
+        </ul>
+        <p>Choosing a tokenizer affects length (tokens per text) and model performance. For code-heavy workloads, prefer tokenizers trained on code too.</p>
+
+        <h1 class="section">Pretraining & Fine-tuning</h1>
+        <p><strong>Pretraining:</strong> Models are trained with objectives like next-token prediction (causal language modeling) or masked language modeling. This step uses massive datasets and large compute (GPUs/TPUs).</p>
+        <p><strong>Fine-tuning:</strong> After pretraining, models are adapted to specific tasks: classification, summarization, instruction-following. Techniques include supervised fine-tuning, LoRA (low-rank adapters), and parameter-efficient tuning.</p>
+
+        <h1 class="section">Retrieval-Augmented Generation (RAG) — Diagram + CSS flow</h1>
+        <p>RAG augments LLMs with an external knowledge source (vector DB, search engine). This reduces hallucinations for niche or up-to-date facts.</p>
+
+        <div class="diagram">
+          <!-- CSS flow boxes representing RAG -->
+          <div class="flow-row flowchart">
+            <div class="box">User Query</div>
+            <div class="arrow">➡</div>
+            <div class="box">Retriever (Embeddings + Vector DB)</div>
+            <div class="arrow">➡</div>
+            <div class="box">Top-k Documents</div>
+            <div class="arrow">➡</div>
+            <div class="box">Prompt Builder (Context + Query)</div>
+            <div class="arrow">➡</div>
+            <div class="box">LLM → Answer</div>
+          </div>
+          <div class="note">Flow: Query → Semantic search → Retrieve documents → Build a prompt with context → LLM generates grounded answer.</div>
+        </div>
+
+        <p>Common vector stores: FAISS (local), Milvus, Weaviate, Pinecone (managed). Embeddings are typically produced by sentence-transformers or OpenAI embedding APIs.</p>
+
+        <h1 class="section">Application Frameworks — Deep Dive</h1>
+        <p><strong>Hugging Face Transformers:</strong> Model hub, tokenizers, training utilities. Use it for loading pretrained weights and running inference.</p>
+        <p><strong>LangChain:</strong> A framework to build chains and agents: it helps orchestrate prompts, memory, tools, and retrievers. Key parts: LLM wrappers, chains, agents, memory modules, and tool integrations.</p>
+        <p><strong>LlamaIndex (formerly GPT Index):</strong> Focuses on building indexes over documents to make them queryable for LLMs. Good for building knowledge-base Q&A systems.</p>
+        <p><strong>Haystack:</strong> End-to-end pipeline for search and QA with components for retrievers, readers, and pipelines suitable for production.</p>
+
+        <h1 class="section">Example: Building a simple RAG pipeline (pseudo steps)</h1>
+        <pre><code>1. Ingest documents → clean & normalize
+2. Create embeddings for each doc using an embedding model
+3. Store embeddings in a vector DB (FAISS/Pinecone/Milvus)
+4. At query time:
+   a. Embed the user query
+   b. Retrieve top-k nearest documents
+   c. Build a prompt: include retrieved docs + user query
+   d. Call the LLM with the prompt and receive the answer
+5. Optionally: cite sources or include document ids in the response</code></pre>
+
+        <h1 class="section">Inference & Deployment</h1>
+        <p>Deployment options:</p>
+        <ul>
+          <li><strong>Cloud APIs:</strong> OpenAI, Anthropic, Cohere — easiest to use, managed scaling, but cost per request.</li>
+          <li><strong>Self-hosting:</strong> Hugging Face Inference Endpoints, custom Kubernetes clusters with GPU instances. Requires infra, scaling, and cost management.</li>
+          <li><strong>Optimizations:</strong> Quantization (8-bit, 4-bit), ONNX / TensorRT, batching, caching, and using CPU/GPU appropriately.</li>
+        </ul>
+
+        <h1 class="section">Safety, Alignment & Evaluation</h1>
+        <p>Key safety practices:</p>
+        <ul>
+          <li>Filter training data for private or toxic content.</li>
+          <li>Use instruction-tuning and RLHF (Reinforcement Learning from Human Feedback) to align outputs with human preferences.</li>
+          <li>Implement rate-limiting, output filtering (toxicity detectors), and human-in-the-loop review for sensitive domains.</li>
+        </ul>
+
+        <h1 class="section">Monitoring & Observability</h1>
+        <p>Production systems need to track:</p>
+        <ul>
+          <li>Latency and throughput</li>
+          <li>Per-request cost</li>
+          <li>Quality metrics: ROUGE, BLEU, human evaluation</li>
+          <li>Drift detection: monitor for changes in input distribution</li>
+        </ul>
+
+        <h1 class="section">Real-world Examples & Use Cases</h1>
+        <p>- Customer support assistants (contextual replies using RAG)</p>
+        <p>- Code assistants and pair programming (fine-tuned on code)</p>
+        <p>- Document summarization and knowledge-base Q&A</p>
+        <p>- Agents that can call external tools (browsers, calculators, databases)</p>
+
+        <h1 class="section">Tools & Libraries Cheat-sheet</h1>
+        <ul>
+          <li>Transformers (Hugging Face) — model loading & inference</li>
+          <li>Tokenizers (Hugging Face) — fast tokenization</li>
+          <li>LangChain — application orchestration</li>
+          <li>LlamaIndex — document indexing for retrieval</li>
+          <li>FAISS / Milvus / Weaviate / Pinecone — vector stores</li>
+          <li>Sentence-Transformers — embeddings</li>
+        </ul>
+
+        <h1 class="section">Appendix — Code Snippets</h1>
+        <h1>Python: Quick Hugging Face Inference</h1>
+        <pre><code>from transformers import pipeline
+generator = pipeline('text-generation', model='gpt2')
+print(generator('Viraj is learning about LLMs and', max_length=40)[0]['generated_text'])</code></pre>
+
+        <h1>Node.js: Simple LLM Call (pseudo)</h1>
+        <pre><code>// using an LLM provider SDK
+const result = await llm.generate({
+  model: 'gpt-4o',
+  prompt: 'Summarize this for a beginner: ...',
+  max_tokens: 300
+});
+console.log(result.text);</code></pre>
+
+        <div class="big-hr"></div>
+
+        <h1 class="section">Diagrams gallery (SVG thumbnails)</h1>
+        <p>Below are small SVG thumbnails you can open or copy — they include Transformer block, RAG flow, and a high-level infra diagram.</p>
+
+        <div class="diagram center">
+          <!-- Tiny infra SVG -->
+          <svg viewBox="0 0 800 160" width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="12" width="150" height="60" rx="8" fill="#fff" stroke="#cbd5e1"/>
+            <text x="87" y="45" text-anchor="middle" fill="#0b3d91">User Device</text>
+
+            <rect x="190" y="12" width="150" height="60" rx="8" fill="#fff" stroke="#cbd5e1"/>
+            <text x="265" y="45" text-anchor="middle" fill="#0b3d91">API / App Server</text>
+
+            <rect x="380" y="12" width="150" height="60" rx="8" fill="#fff" stroke="#cbd5e1"/>
+            <text x="455" y="45" text-anchor="middle" fill="#0b3d91">LLM Inference</text>
+
+            <rect x="570" y="12" width="150" height="60" rx="8" fill="#fff" stroke="#cbd5e1"/>
+            <text x="645" y="45" text-anchor="middle" fill="#0b3d91">Vector DB / Storage</text>
+
+            <line x1="162" y1="42" x2="190" y2="42" stroke="#94a3b8" marker-end="url(#a)"/>
+            <line x1="340" y1="42" x2="380" y2="42" stroke="#94a3b8" marker-end="url(#a)"/>
+            <line x1="530" y1="42" x2="570" y2="42" stroke="#94a3b8" marker-end="url(#a)"/>
+            <defs>
+              <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 z" fill="#94a3b8"/>
+              </marker>
+            </defs>
+
+          </svg>
+        </div>
+
+        <footer>
+          <p class="small">This page is generated to be dropped into a GitHub Pages site. All major content is placed inside &lt;h1&gt; and &lt;p&gt; tags per your request, with diagrams inline as SVG and CSS-based flow visuals.</p>
+        </footer>
+      </article>
+
+      <aside>
+        <h1 class="section">Quick Links</h1>
+        <p><strong>Use these steps to publish:</strong></p>
+        <ol>
+          <li>Create a new GitHub repo (username.github.io) or use an existing one.</li>
+          <li>Add this <code>index.html</code> at the root of the repo.</li>
+          <li>Commit and push — enable GitHub Pages in repo settings (branch: main or gh-pages).</li>
+          <li>Your site will be available at <code>https://username.github.io/</code>.</li>
+        </ol>
+
+        <h1 class="section">Diagram options included</h1>
+        <p>- SVG diagrams (Transformer, infra thumbnails)</p>
+        <p>- CSS flowcharts (RAG pipeline)</p>
+        <p>- Dark / Light toggle (top-right)</p>
+
+        <h1 class="section">Want more?</h1>
+        <p>Tell me if you want:</p>
+        <ul>
+          <li>Exported PNGs of diagrams (I can extract SVG to PNG)</li>
+          <li>Separate assets folder with images</li>
+          <li>Interactive code examples (embedded runnable sandboxes)</li>
+        </ul>
+
+        <div class="big-hr"></div>
+        <p class="small">Prepared for: <strong>Viraj Shejul</strong></p>
+        <p class="small">Date: October 15, 2025</p>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    // Dark/light theme toggle — persists in localStorage
+    (function(){
+      const btn = document.getElementById('themeBtn');
+      const root = document.documentElement;
+      const saved = localStorage.getItem('llm_theme');
+      if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+      btn.addEventListener('click',()=>{
+        const cur = document.documentElement.getAttribute('data-theme');
+        if(cur === 'dark'){
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('llm_theme','light');
+        } else {
+          document.documentElement.setAttribute('data-theme','dark');
+          localStorage.setItem('llm_theme','dark');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
